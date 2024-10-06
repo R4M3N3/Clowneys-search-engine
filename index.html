@@ -189,6 +189,13 @@
 
       return false; // Prevent form from submitting
     }
+
+    // Warn the user when they try to close the tab
+    window.addEventListener('beforeunload', (e) => {
+      const confirmationMessage = "Are you sure you want to leave this page?";
+      e.returnValue = confirmationMessage; // Standard way to show the dialog
+      return confirmationMessage; // For some older browsers
+    });
   </script>
 </body>
 </html>
