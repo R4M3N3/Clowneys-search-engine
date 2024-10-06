@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +29,11 @@
       height: 100vh;
       color: white;
       text-align: center;
+      transition: opacity 0.5s;
+    }
+    .hidden {
+      opacity: 0;
+      visibility: hidden;
     }
     h1 {
       font-size: 4em;
@@ -56,25 +60,29 @@
       cursor: pointer;
     }
     iframe {
-      width: 80%;
-      height: 60vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       border: none;
-      margin-top: 20px;
       display: none;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
   <canvas id="spaceCanvas"></canvas>
 
-  <div class="proxy-container">
+  <div class="proxy-container" id="proxy-container">
     <h1>Nebula V.1</h1>
     <form class="proxy-form" onsubmit="return loadUrl()">
       <input type="text" id="proxy-url" placeholder="Enter URL" required aria-label="Enter URL">
       <button type="submit">Go</button>
     </form>
-    <iframe id="proxy-frame"></iframe>
   </div>
+
+  <iframe id="proxy-frame"></iframe>
 
   <script>
     // Space-themed background
@@ -157,6 +165,7 @@
     function loadUrl() {
       const urlInput = document.getElementById('proxy-url').value.trim();
       const iframe = document.getElementById('proxy-frame');
+      const proxyContainer = document.getElementById('proxy-container');
 
       // Automatically prepend 'https://' if no protocol is included
       const url = urlInput.startsWith('http://') || urlInput.startsWith('https://') 
@@ -171,6 +180,10 @@
         return false;
       }
 
+      // Hide the heading and input
+      proxyContainer.classList.add('hidden');
+
+      // Show iframe in full screen
       iframe.style.display = 'block';
       iframe.src = url;
 
