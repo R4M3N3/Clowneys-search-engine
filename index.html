@@ -164,6 +164,7 @@
     // Proxy Functionality
     function loadUrl() {
       const urlInput = document.getElementById('proxy-url').value.trim();
+      const iframe = document.getElementById('proxy-frame');
       const proxyContainer = document.getElementById('proxy-container');
 
       // Automatically prepend 'https://' if no protocol is included
@@ -182,7 +183,11 @@
       // Hide the heading and input
       proxyContainer.classList.add('hidden');
 
-      // Open URL in a new tab
+      // Show iframe and load the URL
+      iframe.style.display = 'block';
+      iframe.src = url;
+
+      // Open URL in a new tab as well
       window.open(url, '_blank');
 
       return false; // Prevent form from submitting
