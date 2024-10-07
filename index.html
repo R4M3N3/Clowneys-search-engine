@@ -29,7 +29,6 @@
       height: 100vh;
       color: white;
       text-align: center;
-      transition: opacity 0.5s;
     }
     h1 {
       font-size: 4em;
@@ -160,54 +159,24 @@
     // Proxy Functionality
     function loadUrl() {
       const urlInput = document.getElementById('proxy-url').value.trim();
+      const iframe = document.getElementById('proxy-frame');
 
-      // Automatically prepend 'https://' if no protocol is included
-      const url = urlInput.startsWith('http://') || urlInput.startsWith('https://')
-        ? urlInput
-        : `https://${urlInput}`;
+      // Prepend the proxy server to the input URL
+      const proxyUrl = `http://108.181.6.89/?url=` + encodeURIComponent(urlInput);
 
       // Validate URL format using a regex pattern
       const urlPattern = /^(http:\/\/|https:\/\/)/;
 
-      if (!urlPattern.test(url)) {
+      if (!urlPattern.test(urlInput)) {
         alert("Please enter a valid URL.");
         return false;
       }
 
-      // Open a new tab with 'about:blank' and inject the iframe with the provided URL
-      const newTab = window.open('about:blank', '_blank');
-      
-      if (newTab) {
-        newTab.document.write(`
-          <html>
-            <head>
-              <title>Loading...</title>
-              <style>
-                body, html {
-                  margin: 0;
-                  padding: 0;
-                  height: 100%;
-                  overflow: hidden;
-                }
-                iframe {
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  width: 100%;
-                  height: 100%;
-                  border: none;
-                }
-              </style>
-            </head>
-            <body>
-              <iframe src="${url}"></iframe>
-            </body>
-          </html>
-        `);
-        newTab.document.close();  // Ensure the new document is fully written
-      }
+      // Show iframe in full screen with proxy URL
+      iframe.style.display = 'block';
+      iframe.src = proxyUrl;
 
-      return false; // Prevent form submission
+      return false; // Prevent form from submitting
     }
 
     // Warn the user when they try to close the tab
