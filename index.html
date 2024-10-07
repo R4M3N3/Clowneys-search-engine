@@ -53,7 +53,7 @@
       padding: 10px 20px;
       font-size: 18px;
       border: none;
-      background-color: #189bcc;
+      background-color: #189bcc; /* Updated button color */
       color: white;
       border-radius: 5px;
       margin-left: 10px;
@@ -164,12 +164,11 @@
     // Proxy Functionality
     function loadUrl() {
       const urlInput = document.getElementById('proxy-url').value.trim();
-      const iframe = document.getElementById('proxy-frame');
       const proxyContainer = document.getElementById('proxy-container');
 
       // Automatically prepend 'https://' if no protocol is included
-      const url = urlInput.startsWith('http://') || urlInput.startsWith('https://') 
-        ? urlInput 
+      const url = urlInput.startsWith('http://') || urlInput.startsWith('https://')
+        ? urlInput
         : `https://${urlInput}`;
 
       // Validate URL format using a regex pattern
@@ -183,14 +182,40 @@
       // Hide the heading and input
       proxyContainer.classList.add('hidden');
 
-      // Show iframe and load the URL
-      iframe.style.display = 'block';
-      iframe.src = url;
+      // Open a new tab with 'about:blank' and inject the iframe with the provided URL
+      const newTab = window.open('about:blank', '_blank');
+      
+      if (newTab) {
+        newTab.document.write(`
+          <html>
+            <head>
+              <title>Loading...</title>
+              <style>
+                body, html {
+                  margin: 0;
+                  padding: 0;
+                  height: 100%;
+                  overflow: hidden;
+                }
+                iframe {
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  border: none;
+                }
+              </style>
+            </head>
+            <body>
+              <iframe src="${url}"></iframe>
+            </body>
+          </html>
+        `);
+        newTab.document.close();  // Ensure the new document is fully written
+      }
 
-      // Open URL in a new tab as well
-      window.open(url, '_blank');
-
-      return false; // Prevent form from submitting
+      return false; // Prevent form submission
     }
 
     // Warn the user when they try to close the tab
