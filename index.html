@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Tab</title>
+  <title>Clowney's Search Engine</title>
   <style>
     body, html {
       margin: 0;
@@ -166,6 +166,9 @@
 
       // Validate URL format using a regex pattern
       const urlPattern = /^(http:\/\/|https:\/\/)/;
+
+      console.log("Input URL: ", urlInput); // Debugging log
+      console.log("Proxy URL: ", proxyUrl); // Debugging log
 
       if (!urlPattern.test(urlInput)) {
         alert("Please enter a valid URL.");
