@@ -31,10 +31,6 @@
       text-align: center;
       transition: opacity 0.5s;
     }
-    .hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
     h1 {
       font-size: 4em;
       margin-bottom: 20px;
@@ -164,7 +160,6 @@
     // Proxy Functionality
     function loadUrl() {
       const urlInput = document.getElementById('proxy-url').value.trim();
-      const proxyContainer = document.getElementById('proxy-container');
 
       // Automatically prepend 'https://' if no protocol is included
       const url = urlInput.startsWith('http://') || urlInput.startsWith('https://')
@@ -178,9 +173,6 @@
         alert("Please enter a valid URL.");
         return false;
       }
-
-      // Hide the heading and input
-      proxyContainer.classList.add('hidden');
 
       // Open a new tab with 'about:blank' and inject the iframe with the provided URL
       const newTab = window.open('about:blank', '_blank');
