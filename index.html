@@ -53,7 +53,7 @@
       padding: 10px 20px;
       font-size: 18px;
       border: none;
-      background-color: #189bcc; /* Updated button color */
+      background-color: #189bcc;
       color: white;
       border-radius: 5px;
       margin-left: 10px;
@@ -164,7 +164,6 @@
     // Proxy Functionality
     function loadUrl() {
       const urlInput = document.getElementById('proxy-url').value.trim();
-      const iframe = document.getElementById('proxy-frame');
       const proxyContainer = document.getElementById('proxy-container');
 
       // Automatically prepend 'https://' if no protocol is included
@@ -183,9 +182,8 @@
       // Hide the heading and input
       proxyContainer.classList.add('hidden');
 
-      // Show iframe in full screen
-      iframe.style.display = 'block';
-      iframe.src = url;
+      // Open URL in a new tab
+      window.open(url, '_blank');
 
       return false; // Prevent form from submitting
     }
